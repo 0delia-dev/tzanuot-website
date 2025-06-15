@@ -1,139 +1,98 @@
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded and parsed');
-    ['theme-toggle','font-size-toggle','contrast-toggle','add-item-form'].forEach(function(id){
-        var el = document.getElementById(id);
-        console.log(id, el ? 'found' : 'NOT found');
-    });
-});
-// Sample data definitions for safety (remove if defined elsewhere)
-let sampleItems = sampleItems || [];
-let forumPosts = forumPosts || [];
-
-// ציטוטי צניעות
+// --- SAMPLE DATA ---
+let sampleItems = [];
+let forumPosts = [];
 const tzniutQuotes = [
-    {
-        id: 1,
-        author: "נחמה ליבוביץ",
-        text: "האדם צריך להיות צנוע לא רק בחיצוניות אלא בפנימיות.",
-        source: "עיונים בספר בראשית",
-        comments: []
-    },
-    {
-        id: 2,
-        author: "רבקה מירב",
-        text: "הצניעות היא כוח פנימי המעניק לאישה יופי אמיתי ועמוק.",
-        source: "אמונה בעידן המודרני",
-        comments: []
-    },
-    {
-        id: 3,
-        author: "הרבנית טל אורן",
-        text: "צניעות איננה הסתרה אלא הדגשה נכונה - להדגיש את הנשמה ולא רק את הגוף.",
-        source: "דרשות לנשים",
-        comments: []
-    }
+    { id: 1, author: "נחמה ליבוביץ", text: "האדם צריך להיות צנוע לא רק בחיצוניות אלא בפנימיות.", source: "עיונים בספר בראשית", comments: [] }
 ];
 
-// משתנים גלובליים
+// --- STATE ---
 let currentItems = [...sampleItems];
 let currentForumPosts = [...forumPosts];
 let currentQuotes = [...tzniutQuotes];
 
-// אתחול האפליקציה
+// --- INITIALIZE ---
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
+// --- APP INIT ---
 function initializeApp() {
-    // טעינת הגדרות משתמש
     loadUserSettings();
-    
-    // הגדרת event listeners
     setupEventListeners();
-    
-    // טעינת תוכן ראשוני
-    loadInitialContent();
-    
-    // טעינת נתונים מ-localStorage אם קיימים
+    switchTab('home'); // Start with the home tab
     loadDataFromStorage();
 }
 
+// --- EVENT LISTENERS ---
 function setupEventListeners() {
-    // כפתורי נגישות
     const themeToggle = document.getElementById('theme-toggle');
     const fontSizeToggle = document.getElementById('font-size-toggle');
     const contrastToggle = document.getElementById('contrast-toggle');
-    
     if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
     if (fontSizeToggle) fontSizeToggle.addEventListener('click', toggleFontSize);
     if (contrastToggle) contrastToggle.addEventListener('click', toggleContrast);
-    
-    // כפתורי ניווט
-    const navButtons = document.querySelectorAll('.nav-btn');
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            switchTab(this.dataset.tab);
-        });
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function() { switchTab(this.dataset.tab); });
     });
-    const actionButtons = document.querySelectorAll('.btn[data-tab]');
-    actionButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            switchTab(this.dataset.tab);
-        });
-    });
-    
-    // טופס הוספת בגד
+
     const addItemForm = document.getElementById('add-item-form');
-    if (addItemForm) {
-        addItemForm.addEventListener('submit', handleAddItem);
-    }
-    
-    // מסננים
-    const filters = ['sleeve-filter', 'skirt-filter', 'collar-filter', 'pockets-filter'];
-    filters.forEach(filterId => {
-        const filter = document.getElementById(filterId);
+    if (addItemForm) addItemForm.addEventListener('submit', handleAddItem);
+
+    ['sleeve-filter', 'skirt-filter', 'collar-filter', 'pockets-filter'].forEach(id => {
+        const filter = document.getElementById(id);
         if (filter) filter.addEventListener('change', applyFilters);
     });
-    
-    // פורום
+
     const askQuestionBtn = document.getElementById('ask-question-btn');
     const submitQuestionBtn = document.getElementById('submit-question-btn');
     const cancelQuestionBtn = document.getElementById('cancel-question-btn');
     if (askQuestionBtn) askQuestionBtn.addEventListener('click', showQuestionForm);
     if (submitQuestionBtn) submitQuestionBtn.addEventListener('click', submitQuestion);
     if (cancelQuestionBtn) cancelQuestionBtn.addEventListener('click', hideQuestionForm);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.altKey) {
+            switch(e.key) {
+                case 'd': case 'ד': e.preventDefault(); toggleTheme(); break;
+                case 't': case 'ת': e.preventDefault(); toggleFontSize(); break;
+                case 'c': case 'ג': e.preventDefault(); toggleContrast(); break;
+                case '1': e.preventDefault(); switchTab('home'); break;
+                case '2': e.preventDefault(); switchTab('gallery'); break;
+                case '3': e.preventDefault(); switchTab('add-item'); break;
+                case '4': e.preventDefault(); switchTab('forum'); break;
+                case '5': e.preventDefault(); switchTab('tzniut-forum'); break;
+                case '6': e.preventDefault(); switchTab('about'); break;
+            }
+        }
+    });
 }
 
-// נגישות - החלפת ערכת נושא
+// --- THEMES & ACCESSIBILITY ---
 function toggleTheme() {
     const currentTheme = document.body.dataset.theme || 'light';
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.body.dataset.theme = newTheme;
     const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) {
-        themeBtn.textContent = newTheme === 'light' ? '⏾' : '✹';
-    }
+    if (themeBtn) themeBtn.textContent = newTheme === 'light' ? '⏾' : '✹';
     localStorage.setItem('theme', newTheme);
     showNotification(`מעבר למצב ${newTheme === 'light' ? 'בהיר' : 'כהה'}`);
 
-    // Animate ויהי אור in a circle if changing from dark to light
+    // Animate "ויהי אור" when switching from dark -> light
     if (currentTheme === 'dark' && newTheme === 'light') {
         const lightMsg = document.getElementById('let-there-be-light');
         if (lightMsg) {
             lightMsg.style.display = 'block';
             lightMsg.classList.remove('animate');
-            // Force reflow to restart the animation
             void lightMsg.offsetWidth;
             lightMsg.classList.add('animate');
             setTimeout(() => {
                 lightMsg.classList.remove('animate');
                 lightMsg.style.display = 'none';
-            }, 1600); // matches animation duration
+            }, 1600);
         }
     }
 }
-
-// נגישות - שינוי גודל טקסט
 function toggleFontSize() {
     const sizes = ['normal', 'small', 'large', 'extra-large'];
     const currentSize = document.body.dataset.fontSize || 'normal';
@@ -144,8 +103,6 @@ function toggleFontSize() {
     localStorage.setItem('fontSize', newSize);
     showNotification(`גודל טקסט: ${getSizeLabel(newSize)}`);
 }
-
-// נגישות - החלפת ניגודיות
 function toggleContrast() {
     const currentContrast = document.body.dataset.contrast || 'normal';
     const newContrast = currentContrast === 'normal' ? 'high' : 'normal';
@@ -153,7 +110,6 @@ function toggleContrast() {
     localStorage.setItem('contrast', newContrast);
     showNotification(`ניגודיות ${newContrast === 'high' ? 'גבוהה' : 'רגילה'}`);
 }
-
 function loadUserSettings() {
     const theme = localStorage.getItem('theme') || 'light';
     const fontSize = localStorage.getItem('fontSize') || 'normal';
@@ -165,33 +121,28 @@ function loadUserSettings() {
     if (themeBtn) themeBtn.textContent = theme === 'light' ? '⏾' : '✹';
 }
 
+// --- TAB NAVIGATION ---
 function switchTab(tabId) {
-    const tabs = document.querySelectorAll('.tab-content');
-    const navBtns = document.querySelectorAll('.nav-btn');
-    tabs.forEach(tab => tab.classList.remove('active'));
-    navBtns.forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(tab => tab.style.display='none');
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
     const targetTab = document.getElementById(tabId);
     const targetNavBtn = document.querySelector(`[data-tab="${tabId}"]`);
-    if (targetTab) targetTab.classList.add('active');
+    if (targetTab) targetTab.style.display = '';
     if (targetNavBtn) targetNavBtn.classList.add('active');
     loadTabContent(tabId);
 }
-
 function loadTabContent(tabId) {
-    switch(tabId) {
-        case 'gallery': renderItems(); break;
-        case 'forum': renderForumPosts(); break;
-        case 'tzniut-forum': renderTzniutQuotes(); break;
-    }
+    if (tabId === 'gallery') renderItems();
+    if (tabId === 'forum') renderForumPosts();
+    if (tabId === 'tzniut-forum') renderTzniutQuotes();
 }
-
 function loadInitialContent() {
     renderItems();
     renderForumPosts();
     renderTzniutQuotes();
 }
 
-// רינדור פריטי בגדים
+// --- ITEMS ---
 function renderItems(itemsToRender = currentItems) {
     const grid = document.getElementById('items-grid');
     if (!grid) return;
@@ -201,7 +152,7 @@ function renderItems(itemsToRender = currentItems) {
     }
     grid.innerHTML = itemsToRender.map(item => `
         <div class="item-card">
-            <div class="item-title">${item.title}</div>
+            <div class="item-title">${item.title || ''}</div>
             <div class="item-details">
                 <span class="item-tag">שרוולים: ${getHebrewValue('sleeve', item.sleeve_length)}</span>
                 <span class="item-tag">חצאית: ${getHebrewValue('skirt', item.skirt_length)}</span>
@@ -223,7 +174,6 @@ function renderItems(itemsToRender = currentItems) {
     `).join('');
     setupStarRatings();
 }
-
 function generateStars(rating, itemId) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
@@ -232,7 +182,6 @@ function generateStars(rating, itemId) {
     }
     return stars;
 }
-
 function setupStarRatings() {
     const stars = document.querySelectorAll('.star');
     stars.forEach(star => {
@@ -243,7 +192,6 @@ function setupStarRatings() {
         });
     });
 }
-
 function updateItemRating(itemId, rating) {
     const item = currentItems.find(i => i.id === itemId);
     if (item) {
@@ -253,7 +201,6 @@ function updateItemRating(itemId, rating) {
         showNotification('דירוג נשמר בהצלחה!');
     }
 }
-
 function addComment(itemId) {
     const input = document.querySelector(`input[data-item-id="${itemId}"]`);
     const comment = input.value.trim();
@@ -268,17 +215,16 @@ function addComment(itemId) {
         }
     }
 }
-
 function applyFilters() {
-    const sleeveFilter = document.getElementById('sleeve-filter').value;
-    const skirtFilter = document.getElementById('skirt-filter').value;
-    const collarFilter = document.getElementById('collar-filter').value;
-    const pocketsFilter = document.getElementById('pockets-filter').value;
+    const sleeveFilter = document.getElementById('sleeve-filter')?.value;
+    const skirtFilter = document.getElementById('skirt-filter')?.value;
+    const collarFilter = document.getElementById('collar-filter')?.value;
+    const pocketsFilter = document.getElementById('pockets-filter')?.value;
     let filteredItems = currentItems.filter(item => {
         const sleeveMatch = !sleeveFilter || item.sleeve_length === sleeveFilter;
         const skirtMatch = !skirtFilter || item.skirt_length === skirtFilter;
         const collarMatch = !collarFilter || item.collar_type === collarFilter;
-        const pocketsMatch = !pocketsFilter || 
+        const pocketsMatch = !pocketsFilter ||
             (pocketsFilter === 'yes' && item.has_pockets) ||
             (pocketsFilter === 'no' && !item.has_pockets);
         return sleeveMatch && skirtMatch && collarMatch && pocketsMatch;
@@ -286,8 +232,6 @@ function applyFilters() {
     renderItems(filteredItems);
     showNotification(`נמצאו ${filteredItems.length} פריטים מתאימים`);
 }
-
-// הוספת בגד חדש
 function handleAddItem(e) {
     e.preventDefault();
     const formData = {
@@ -308,7 +252,7 @@ function handleAddItem(e) {
     showNotification('בגד נוסף בהצלחה!');
 }
 
-// פורום - הצגת טופס שאלה
+// --- FORUM ---
 function showQuestionForm() {
     const form = document.getElementById('ask-question-form');
     if (form) {
@@ -316,8 +260,6 @@ function showQuestionForm() {
         form.scrollIntoView({ behavior: 'smooth' });
     }
 }
-
-// פורום - הסתרת טופס שאלה
 function hideQuestionForm() {
     const form = document.getElementById('ask-question-form');
     if (form) {
@@ -326,8 +268,6 @@ function hideQuestionForm() {
         document.getElementById('question-content').value = '';
     }
 }
-
-// פורום - שליחת שאלה
 function submitQuestion() {
     const title = document.getElementById('question-title').value.trim();
     const content = document.getElementById('question-content').value.trim();
@@ -348,7 +288,6 @@ function submitQuestion() {
     saveDataToStorage();
     showNotification('שאלה פורסמה בהצלחה!');
 }
-
 function renderForumPosts() {
     const container = document.getElementById('forum-posts');
     if (!container) return;
@@ -371,7 +310,6 @@ function renderForumPosts() {
         </div>
     `).join('');
 }
-
 function addAnswer(postId) {
     const input = document.querySelector(`input[data-post-id="${postId}"]`);
     const answer = input.value.trim();
@@ -387,6 +325,7 @@ function addAnswer(postId) {
     }
 }
 
+// --- QUOTES ---
 function renderTzniutQuotes() {
     const container = document.getElementById('tzniut-quotes');
     if (!container) return;
@@ -401,5 +340,58 @@ function renderTzniutQuotes() {
                     <button onclick="addQuoteComment(${quote.id})">שלחי</button>
                 </div>
             </div>
-        </div
-
+        </div>
+    `).join('');
+}
+function addQuoteComment(quoteId) {
+    const input = document.querySelector(`input[data-quote-id="${quoteId}"]`);
+    const comment = input.value.trim();
+    if (comment) {
+        const quote = currentQuotes.find(q => q.id === quoteId);
+        if (quote) {
+            quote.comments.push(comment);
+            input.value = '';
+            renderTzniutQuotes();
+            saveDataToStorage();
+            showNotification('תגובה נוספה בהצלחה!');
+        }
+    }
+}
+
+// --- HELPERS ---
+function getHebrewValue(type, value) {
+    const translations = {
+        sleeve: { 'long': 'ארוך', '3quarter': '3/4', 'short': 'קצר', 'none': 'ללא שרוולים' },
+        skirt: { 'long': 'ארוכה', 'midi': 'מידי', 'short': 'קצרה', 'none': 'ללא' },
+        collar: { 'high': 'גבוה', 'round': 'עגול', 'v': 'וי', 'none': 'ללא' }
+    };
+    return translations[type][value] || value;
+}
+function getSizeLabel(size) {
+    const labels = { 'small': 'קטן', 'normal': 'רגיל', 'large': 'גדול', 'extra-large': 'גדול מאוד' };
+    return labels[size] || 'רגיל';
+}
+function showNotification(message) {
+    document.querySelectorAll('.notification').forEach(n => n.remove());
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => { if (notification.parentNode) notification.remove(); }, 3000);
+}
+function saveDataToStorage() {
+    localStorage.setItem('tzanuot-items', JSON.stringify(currentItems));
+    localStorage.setItem('tzanuot-forum-posts', JSON.stringify(currentForumPosts));
+    localStorage.setItem('tzanuot-quotes', JSON.stringify(currentQuotes));
+}
+function loadDataFromStorage() {
+    const savedItems = localStorage.getItem('tzanuot-items');
+    const savedPosts = localStorage.getItem('tzanuot-forum-posts');
+    const savedQuotes = localStorage.getItem('tzanuot-quotes');
+    if (savedItems) currentItems = JSON.parse(savedItems);
+    if (savedPosts) currentForumPosts = JSON.parse(savedPosts);
+    if (savedQuotes) currentQuotes = JSON.parse(savedQuotes);
+    renderItems();
+    renderForumPosts();
+    renderTzniutQuotes();
+}
