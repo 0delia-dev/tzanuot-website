@@ -213,6 +213,28 @@
   --color-warning-rgb: 168, 75, 47;
   --color-info-rgb: 98, 108, 113;
 }
+#let-there-be-light {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 0 0 8px #fff, 0 0 16px #FFD700;
+}
+
+#let-there-be-light.animate {
+  opacity: 1;
+  animation: orbit 1.6s linear forwards;
+}
+
+@keyframes orbit {
+  0%   { transform: rotate(0deg) translate(80px) rotate(0deg) scale(1.2); opacity: 1;}
+  70%  { opacity: 1; }
+  100% { transform: rotate(360deg) translate(80px) rotate(-360deg) scale(0.8); opacity: 0;}
+}
 
 /* Base styles */
 html {
