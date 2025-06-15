@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
+    ['theme-toggle','font-size-toggle','contrast-toggle','add-item-form'].forEach(function(id){
+        var el = document.getElementById(id);
+        console.log(id, el ? 'found' : 'NOT found');
+    });
+});
 // Sample data definitions for safety (remove if defined elsewhere)
 let sampleItems = sampleItems || [];
 let forumPosts = forumPosts || [];
