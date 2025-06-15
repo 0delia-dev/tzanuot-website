@@ -1,63 +1,69 @@
-<!-- Navigation Buttons -->
-<div>
-  <button class="nav-btn" data-tab="home">בית</button>
-  <button class="nav-btn" data-tab="gallery">גלריה</button>
-  <button class="nav-btn" data-tab="add-item">הוספת בגד</button>
-  <button class="nav-btn" data-tab="forum">פורום</button>
-  <button class="nav-btn" data-tab="tzniut-forum">צניעות פורום</button>
-  <button class="nav-btn" data-tab="about">אודות</button>
-</div>
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>צנעות</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Buttons -->
+  <div>
+    <button class="nav-btn" data-tab="home">בית</button>
+    <button class="nav-btn" data-tab="gallery">גלריה</button>
+    <button class="nav-btn" data-tab="add-item">הוספת בגד</button>
+    <button class="nav-btn" data-tab="forum">פורום</button>
+    <button class="nav-btn" data-tab="tzniut-forum">צניעות פורום</button>
+    <button class="nav-btn" data-tab="about">אודות</button>
+  </div>
 
-<!-- Theme Controls -->
-<div id="theme-container" style="position:relative; display:inline-block;">
-  <button id="theme-toggle">⏾</button>
-  <button id="font-size-toggle">A</button>
-  <button id="contrast-toggle">C</button>
-  <div id="let-there-be-light" style="display:none; position:absolute;">ויהי אור</div>
-</div>
+  <!-- Theme Controls -->
+  <div id="theme-container" style="position:relative; display:inline-block;">
+    <button id="theme-toggle">⏾</button>
+    <button id="font-size-toggle">A</button>
+    <button id="contrast-toggle">C</button>
+    <div id="let-there-be-light" style="display:none; position:absolute;">ויהי אור</div>
+  </div>
 
-<!-- Tabs Content -->
-<div id="home" class="tab-content">ברוכים הבאים!</div>
-<div id="gallery" class="tab-content" style="display:none;">
-  <div id="items-grid"></div>
-</div>
-<div id="add-item" class="tab-content" style="display:none;">
-  <form id="add-item-form">
-    <input id="item-title" placeholder="שם הבגד" required>
-    <input id="item-url" placeholder="קישור" required>
-    <select id="sleeve-length">
-      <option value="long">ארוך</option>
-      <option value="3quarter">3/4</option>
-      <option value="short">קצר</option>
-      <option value="none">ללא שרוולים</option>
-    </select>
-    <select id="skirt-length">
-      <option value="long">ארוכה</option>
-      <option value="midi">מידי</option>
-      <option value="short">קצרה</option>
-      <option value="none">ללא</option>
-    </select>
-    <select id="collar-type">
-      <option value="high">גבוה</option>
-      <option value="round">עגול</option>
-      <option value="v">וי</option>
-      <option value="none">ללא</option>
-    </select>
-    <label><input type="checkbox" id="has-pockets">כיסים</label>
-    <button type="submit">הוסיפי</button>
-  </form>
-</div>
-<div id="forum" class="tab-content" style="display:none;">
-  <button id="ask-question-btn">שאלי שאלה</button>
-  <div id="forum-posts"></div>
-  <form id="ask-question-form" style="display:none;">
-    <input id="question-title" placeholder="כותרת" required>
-    <textarea id="question-content" placeholder="שאלה" required></textarea>
-    <button type="button" id="submit-question-btn">שלחי</button>
-    <button type="button" id="cancel-question-btn">ביטול</button>
-  </form>
-</div>
-<div id="tzniut-forum" class="tab-content" style="display:none;">
-  <div id="tzniut-quotes"></div>
-</div>
-<div id="about" class="tab-content" style="display:none;">מידע על האתר</div>
+  <!-- Tabs Content -->
+  <div id="home" class="tab-content">ברוכים הבאים!</div>
+  
+  <div id="gallery" class="tab-content" style="display:none;">
+    <div id="items-grid"></div>
+  </div>
+  
+  <div id="add-item" class="tab-content" style="display:none;">
+    <form id="add-item-form">
+      <input id="item-title" placeholder="שם הבגד" required>
+      <input id="item-url" placeholder="קישור" required>
+      <select id="sleeve-length">
+        <option value="long">ארוך</option>
+        <option value="3quarter">3/4</option>
+        <option value="short">קצר</option>
+        <option value="none">ללא שרוולים</option>
+      </select>
+      <select id="skirt-length">
+        <option value="long">ארוכה</option>
+        <option value="midi">מידי</option>
+        <option value="short">קצרה</option>
+        <option value="none">ללא</option>
+      </select>
+      <select id="collar-type">
+        <option value="high">גבוה</option>
+        <option value="round">עגול</option>
+        <option value="v">וי</option>
+        <option value="none">ללא</option>
+      </select>
+      <label><input type="checkbox" id="has-pockets">כיסים</label>
+      <button type="submit">הוסיפי</button>
+    </form>
+  </div>
+  
+  <div id="forum" class="tab-content" style="display:none;">
+    <button id="ask-question-btn">שאלי שאלה</button>
+    <div id="forum-posts"></div>
+    <form id="ask-question-form" style="display:none;">
+      <input id="question-title" placeholder="כותרת" required>
+      <textarea id="question-content" placeholder
+
