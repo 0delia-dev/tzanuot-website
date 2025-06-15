@@ -103,9 +103,27 @@ function toggleTheme() {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.body.dataset.theme = newTheme;
     const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) themeBtn.textContent = newTheme === 'light' ? '⏾' : '✹';
+    if (themeBtn) {
+        themeBtn.textContent = newTheme === 'light' ? '⏾' : '✹';
+    }
     localStorage.setItem('theme', newTheme);
     showNotification(`מעבר למצב ${newTheme === 'light' ? 'בהיר' : 'כהה'}`);
+
+    // Animate ויהי אור in a circle if changing from dark to light
+    if (currentTheme === 'dark' && newTheme === 'light') {
+        const lightMsg = document.getElementById('let-there-be-light');
+        if (lightMsg) {
+            lightMsg.style.display = 'block';
+            lightMsg.classList.remove('animate');
+            // Force reflow to restart the animation
+            void lightMsg.offsetWidth;
+            lightMsg.classList.add('animate');
+            setTimeout(() => {
+                lightMsg.classList.remove('animate');
+                lightMsg.style.display = 'none';
+            }, 1600); // matches animation duration
+        }
+    }
 }
 
 // נגישות - שינוי גודל טקסט
