@@ -1,59 +1,110 @@
-// נתונים לדוגמה
-const sampleItems = [
-    {
-        id: 1,
-        url: "https://example.com/dress1",
-        title: "שמלה צנועה לאירועים",
-        description: "שמלה ארוכה לאירועים עם שרוולים ארוכים וצווארון גבוה",
-        sleeve_length: "long",
-        skirt_length: "long", 
-        collar_type: "high",
-        has_pockets: true,
-        rating: 4,
-        comments: ["שמלה נהדרת!", "איכות מעולה"]
-    },
-    {
-        id: 2,
-        url: "https://example.com/dress2",
-        title: "חצאית פליסה ארוכה",
-        description: "חצאית פליסה באורך מקסי, נוחה ומתאימה לכל אירוע",
-        sleeve_length: "none",
-        skirt_length: "long",
-        collar_type: "none",
-        has_pockets: false,
-        rating: 5,
-        comments: ["חצאית נוחה ויפה"]
-    },
-    {
-        id: 3,
-        url: "https://example.com/dress3",  
-        title: "חולצה מכופתרת",
-        description: "חולצה מכופתרת עם שרוולים באורך 3/4 וצווארון עגול",
-        sleeve_length: "3quarter",
-        skirt_length: "none",
-        collar_type: "round",
-        has_pockets: true,
-        rating: 3,
-        comments: []
+async function extractMetadataFromUrl(url) {
+    try {
+        // שימוש ב-CORS proxy
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        const data = await response.json();
+        
+        if (data.contents) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data.contents, 'text/html');
+            
+            // חילוץ שם המוצר
+            let productName = '';
+            
+            // נסה למצוא כותרת
+            const title = doc.querySelector('title');
+            if (title) {
+                productName = title.textContent.trim();
+            }
+            
+            // נסה Open Graph title
+            const ogTitle = doc.querySelector('meta[property="og:title"]');
+            if (ogTitle && !productName) {
+                productName = ogTitle.getAttribute('content');
+            }
+            
+            // חילוץ תמונה
+            let productImage = '';
+            
+            // נסה Open Graph image
+            const ogImage = doc.querySelector('meta[property="og:image"]');
+            if (ogImage) {
+                productImage = ogImage.getAttribute('content');
+            }
+            
+            // נסה תמונה ראשונה
+            if (!productImage) {
+                const firstImg = doc.querySelector('img[src]');
+                if (firstImg) {
+                    productImage = firstImg.getAttribute('src');
+                }
+            }
+            
+            return {
+                name: productName || 'בגד ללא שם',
+                image: productImage || generatePlaceholderImage(),
+                description: extractDescription(doc) || ''
+            };
+        }
+    } catch (error) {
+        console.log('לא ניתן לחלץ מידע מהקישור:', error);
     }
-];
+    
+    return {
+        name: 'בגד ללא שם',
+        image: generatePlaceholderImage(),
+        description: ''
+    };
+}
 
-const forumPosts = [
-    {
-        id: 1,
-        title: "איפה למצוא שמלות ארוכות באיכות טובה?",
-        content: "אני מחפשת שמלה ארוכה לאירוע מיוחד. יש המלצות על חנויות טובות?",
-        answers: ["אני ממליצה על חנות ABC, יש להם מבחר גדול", "גם חנות XYZ טובה מאוד"],
-        date: "01/06/2025"
-    },
-    {
-        id: 2,
-        title: "מה דעתכן על שרוולים באורך 3/4?",
-        content: "האם שרוולים באורך 3/4 מתאימים לכל העונות?",
-        answers: ["לדעתי זה מושלם לקיץ וחורף מתון", "תלוי בחומר, אבל בדרך כלל זה נח מאוד"],
-        date: "10/06/2025"
+function extractDescription(doc) {
+    // נסה meta description
+    const metaDesc = doc.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        return metaDesc.getAttribute('content');
     }
-];
+    
+    // נסה Open Graph description
+    const ogDesc = doc.querySelector('meta[property="og:description"]');
+    if (ogDesc) {
+        return ogDesc.getAttribute('content');
+    }
+    
+    return '';
+}
+async function handleItemUpload(e) {
+    e.preventDefault();
+    
+    const url = document.getElementById('itemUrl').value;
+    
+    // הצגת הודעת טעינה
+    showNotification('מחלץ מידע מהקישור...', 'info');
+    
+    // חילוץ מידע מהקישור
+    const metadata = await extractMetadataFromUrl(url);
+    
+    const formData = {
+        url: url,
+        name: metadata.name,
+        image: metadata.image,
+        description: metadata.description || document.getElementById('itemDescription').value,
+        sleeveLength: document.getElementById('sleeveLength').value,
+        skirtLength: document.getElementById('skirtLength').value,
+        collarType: document.getElementById('collarType').value,
+        hasPockets: document.getElementById('hasPockets').checked,
+        rating: 0,
+        comments: [],
+        id: Date.now()
+    };
+    
+    items.push(formData);
+    renderItems();
+    closeUploadForm();
+    
+    showNotification(`בגד "${formData.name}" נוסף בהצלחה!`, 'success');
+}
+
 
 const tzniutQuotes = [
     {
@@ -61,14 +112,14 @@ const tzniutQuotes = [
         author: "נחמה ליבוביץ",
         text: "האדם צריך להיות צנוע לא רק בחיצוניות אלא בפנימיות.",
         source: "עיונים בספר בראשית",
-        comments: ["ציטוט מעורר מחשבה", "אני מסכימה מאוד"]
+        comments: []
     },
     {
         id: 2,
         author: "רבקה מירב",
         text: "הצניעות היא כוח פנימי המעניק לאישה יופי אמיתי ועמוק.",
         source: "אמונה בעידן המודרני",
-        comments: ["זה נכון מאוד"]
+        comments: []
     },
     {
         id: 3,
