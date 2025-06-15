@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צנועות - מיזם לבגדים צנועים</title>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- כפתורי נגישות בתחתית השמאלית -->
+    <div class="accessibility-panel">
+        <button id="theme-toggle" class="accessibility-btn" title="החלף מצב צבע">⏾</button>
+        <button id="font-size-toggle" class="accessibility-btn" title="הגדל טקסט">Aa</button>
+        <button id="contrast-toggle" class="accessibility-btn" title="ניגודיות גבוהה">◐</button>
+    </div>
+
+    <!-- כותרת האתר -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">צנועות</h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-tab="home">בית</button>
+                    <button class="nav-btn" data-tab="gallery">גלריה</button>
+                    <button class="nav-btn" data-tab="add-item">הוסף בגד</button>
+                    <button class="nav-btn" data-tab="forum">פורום שאלות</button>
+                    <button class="nav-btn" data-tab="tzniut-forum">פורום צניעות</button>
+                    <button class="nav-btn" data-tab="about">אודות</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- עמוד בית -->
+            <section id="home" class="tab-content active">
+                <div class="welcome-section">
+                    <h2>שלום וברוכות הבאות לצנועות!</h2>
+                    <p class="welcome-text">
+                        כאן תמצאי את הפתרון לחיפוש הבגדים הצנועים שלך. 
+                        האתר שלנו מאפשר לכן לשתף, לחפש ולמצוא בדיוק מה שאתן מחפשות - 
+                        ללא פשרות על הערכים שלכן.
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" data-tab="add-item">הוסיפי בגד חדש</button>
+                        <button class="btn btn-secondary" data-tab="gallery">עיני בגלריה</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- גלריית בגדים -->
+            <section id="gallery" class="tab-content">
+                <h2>גלריית בגדים</h2>
+                
+                <div class="filters">
+                    <label for="sleeve-filter">אורך שרוולים:</label>
+                    <select id="sleeve-filter">
+                        <option value="">הכל</option>
+                        <option value="long">ארוך</option>
+                        <option value="3quarter">3/4</option>
+                        <option value="short">קצר</option>
+                        <option value="none">ללא שרוולים</option>
+                    </select>
+
+                    <label for="skirt-filter">אורך חצאית:</label>
+                    <select id="skirt-filter">
+                        <option value="">הכל</option>
+                        <option value="long">ארוכה</option>
+                        <option value="midi">מידי</option>
+                        <option value="short">קצרה</option>
+                    </select>
+
+                    <label for="collar-filter">סוג צווארון:</label>
+                    <select id="collar-filter">
+                        <option value="">הכל</option>
+                        <option value="high">גבוה</option>
+                        <option value="round">עגול</option>
+                        <option value="v">וי</option>
+                    </select>
+
+                    <label for="pockets-filter">כיסים:</label>
+                    <select id="pockets-filter">
+                        <option value="">הכל</option>
+                        <option value="yes">כן</option>
+                        <option value="no">לא</option>
+                    </select>
+                </div>
+
+                <div id="items-grid" class="items-grid"></div>
+            </section>
+
+            <!-- הוספת בגד חדש -->
+            <section id="add-item" class="tab-content">
+                <h2>הוסיפי בגד חדש</h2>
+                <form id="add-item-form" class="form">
+                    <div class="form-group">
+                        <label for="item-url">קישור לבגד:</label>
+                        <input type="url" id="item-url" required placeholder="https://example.com/dress">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-title">שם הבגד:</label>
+                        <input type="text" id="item-title" required placeholder="שמלה צנועה ארוכה">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sleeve-length">אורך שרוולים:</label>
+                            <select id="sleeve-length" required>
+                                <option value="">בחרי...</option>
+                                <option value="long">ארוך</option>
+                                <option value="3quarter">3/4</option>
+                                <option value="short">קצר</option>
+                                <option value="none">ללא שרוולים</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skirt-length">אורך חצאית:</label>
+                            <select id="skirt-length" required>
+                                <option value="">בחרי...</option>
+                                <option value="long">ארוכה</option>
+                                <option value="midi">מידי</option>
+                                <option value="short">קצרה</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="collar-type">סוג צווארון:</label>
+                            <select id="collar-type" required>
+                                <option value="">בחרי...</option>
+                                <option value="high">גבוה</option>
+                                <option value="round">עגול</option>
+                                <option value="v">וי</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="has-pockets">
+                                <span class="checkmark"></span>
+                                יש כיסים
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">הוסיפי בגד</button>
+                </form>
+            </section>
+
+            <!-- פורום שאלות ותשובות -->
+            <section id="forum" class="tab-content">
+                <h2>פורום שאלות ותשובות</h2>
+                
+                <button id="ask-question-btn" class="btn btn-secondary">שאלי שאלה חדשה</button>
+                
+                <div id="ask-question-form" class="form" style="display: none;">
+                    <h3>שאלה חדשה</h3>
+                    <div class="form-group">
+                        <label for="question-title">כותרת השאלה:</label>
+                        <input type="text" id="question-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-content">תוכן השאלה:</label>
+                        <textarea id="question-content" required rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="submit-question-btn" class="btn btn-primary">פרסמי שאלה</button>
+                        <button type="button" id="cancel-question-btn" class="btn btn-secondary">ביטול</button>
+                    </div>
+                </div>
+
+                <div id="forum-posts" class="forum-posts"></div>
+            </section>
+
+            <!-- פורום צניעות -->
+            <section id="tzniut-forum" class="tab-content">
+                <h2>פורום צניעות</h2>
+                <p class="forum-description">ציטוטים ומחשבות מהוגות דתיות על צניעות ומשמעותה</p>
+                
+                <div id="tzniut-quotes" class="quotes-container"></div>
+            </section>
+
+            <!-- אודות -->
+            <section id="about" class="tab-content">
+                <h2>אודות המיזם</h2>
+                <div class="about-content">
+                    <p>היי! אני אודליה, ומאז ומתמיד החוויה השנואה עליי לפני החג הייתה החיפוש. חיפוש אחרי בגד שהוא יפה ואמא תאשר את הצניעות. זה היה מובן מאליו בשבילי - אבל למה בעצם?</p>
+                    
+                    <p>מתוך ההבנה הזו הקמתי את המיזם הזה, צנועות.</p>
+                    
+                    <h3>מה אנחנו?</h3>
+                    <p>מיזם "צנועות" נולד מתוך חוויה אישית - הקושי היומיומי במציאת בגדים מתאימים מבלי לבזבז שעות אינסופיות בחיפוש. אני מכירה את התחושה הזו היטב - להיכנס לחנות אחר חנות, לגלוש באתר אחר אתר, ובסוף למצוא רק חלק מהפתרון או בכלל לא למצוא כלום.</p>
+                    
+                    <p>צניעות היא לא רק בחירה - היא אורח חיים. אבל למה שזה יהיה כל כך מורכב? למה שנאלץ להתמודד עם שרוולים קצרים, מחשופים וחצאיות קצרות שלא מתאימות לנו בלי אפשרות להימנע מזה? למה לבזבז זמן יקר לפני כל חג, מועד או אירוע כשיש עוד כל כך הרבה מה לעשות?</p>
+                    
+                    <p>צנועות הוא המקום שבו הפתרונות נמצאים במקום אחד. אבל כדי שזה יעבוד, אני צריכה את העזרה שלכן. האתר מבוסס על שיתוף - כל משתמשת יכולה להוסיף קישורים לפריטים מתאימים ולסמן:</p>
+                    
+                    <ul>
+                        <li>אורך שרוול</li>
+                        <li>אורך חצאית</li>
+                        <li>סוג צווארון</li>
+                        <li>כיסים (כי מי לא אוהבת כיסים? 😌)</li>
+                    </ul>
+                    
+                    <p>בלי התרומה שלכן - הקישורים, הדירוגים והפידבק - האתר לא יוכל לתפקד. הידע והמומחיות שלכן הם מה שהופך את זה למעשי ואמין.</p>
+                    
+                    <h3>החזון שלי?</h3>
+                    <p>אני רוצה שכל אחת תוכל למצוא מה שהיא מחפשת בקלות, בלי להתפשר על הערכים שלה. להפוך את החיפוש לחוויה נעימה במקום למאבק יומיומי.</p>
+                    
+                    <p><strong>בואו נעשה את זה ביחד - בהדדיות.</strong></p>
+                    
+                    <div class="contact-section">
+                        <h3>יצירת קשר</h3>
+                        <p>שאלות? הצעות? רוצות להצטרף לצוות?</p>
+                        <p>כתבו לי: <a href="mailto:katz.odlia@gmail.com">katz.odlia@gmail.com</a></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 צנועות - כל הזכויות שמורות</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
