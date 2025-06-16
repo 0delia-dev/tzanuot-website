@@ -232,11 +232,13 @@ function showQuestionForm() {
     setupCaptcha();
     formStartTime = Date.now();
 }
+
 function hideQuestionForm() {
     document.getElementById('ask-question-form').style.display = 'none';
     document.getElementById('question-title').value = '';
     document.getElementById('question-content').value = '';
 }
+
 function handleQuestionSubmit(e) {
     e.preventDefault();
     if (!validateFormSecurity('question')) return;
