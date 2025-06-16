@@ -49,21 +49,10 @@
 }
 
 /* Font Size System */
-[data-font-size="small"] {
-    font-size: 14px;
-}
-
-[data-font-size="normal"] {
-    font-size: 16px;
-}
-
-[data-font-size="large"] {
-    font-size: 18px;
-}
-
-[data-font-size="extra-large"] {
-    font-size: 20px;
-}
+[data-font-size="small"] { font-size: 14px; }
+[data-font-size="normal"] { font-size: 16px; }
+[data-font-size="large"] { font-size: 18px; }
+[data-font-size="extra-large"] { font-size: 20px; }
 
 /* Base Styles */
 * {
@@ -240,24 +229,6 @@ a:hover {
     border-color: var(--bg-accent);
 }
 
-/* Sections */
-section {
-    margin-bottom: 3rem;
-}
-
-section h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--text-secondary);
-}
-
-.subtitle {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-}
-
 /* Filters */
 .filters {
     display: flex;
@@ -348,57 +319,6 @@ section h2 {
 .star.active {
     color: #ffd700;
     transform: scale(1.1);
-}
-
-/* Comments */
-.item-comments,
-.forum-answers,
-.quote-comments {
-    margin-top: 1rem;
-}
-
-.comment,
-.forum-answer,
-.quote-comment {
-    background: var(--bg-primary);
-    padding: 0.75rem;
-    border-radius: 10px;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    border: 1px solid var(--border-color);
-}
-
-.add-comment,
-.add-answer,
-.add-quote-comment {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.add-comment input,
-.add-answer input,
-.add-quote-comment input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 2px solid var(--border-color);
-    border-radius: 15px;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    outline: none;
-    font-family: inherit;
-}
-
-.add-comment button,
-.add-answer button,
-.add-quote-comment button {
-    padding: 0.5rem 1rem;
-    border: none;
-    background: var(--text-secondary);
-    color: var(--bg-primary);
-    border-radius: 15px;
-    cursor: pointer;
-    font-family: inherit;
 }
 
 /* Forms */
@@ -602,12 +522,12 @@ section h2 {
     box-shadow: 0 6px 20px var(--shadow-hover);
 }
 
-/* Light Animation */
+/* Light Animation - מועבר לתחתית */
 .light-animation {
     position: fixed;
-    top: 50%;
+    bottom: 100px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     pointer-events: none;
     opacity: 0;
     font-size: 2rem;
@@ -621,21 +541,73 @@ section h2 {
 .light-animation.animate {
     display: block;
     opacity: 1;
-    animation: lightOrbit 1.6s linear forwards;
+    animation: lightFloat 1.6s ease-in-out forwards;
 }
 
-@keyframes lightOrbit {
+@keyframes lightFloat {
     0% {
-        transform: translate(-50%, -50%) rotate(0deg) translateX(80px) rotate(0deg) scale(1.2);
-        opacity: 1;
+        transform: translateX(-50%) translateY(20px) scale(0.8);
+        opacity: 0;
     }
-    70% {
+    50% {
+        transform: translateX(-50%) translateY(-10px) scale(1.2);
         opacity: 1;
     }
     100% {
-        transform: translate(-50%, -50%) rotate(360deg) translateX(80px) rotate(-360deg) scale(0.8);
+        transform: translateX(-50%) translateY(-30px) scale(0.9);
         opacity: 0;
     }
+}
+
+/* Comments */
+.item-comments,
+.forum-answers,
+.quote-comments {
+    margin-top: 1rem;
+}
+
+.comment,
+.forum-answer,
+.quote-comment {
+    background: var(--bg-primary);
+    padding: 0.75rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+}
+
+.add-comment,
+.add-answer,
+.add-quote-comment {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.add-comment input,
+.add-answer input,
+.add-quote-comment input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    outline: none;
+    font-family: inherit;
+}
+
+.add-comment button,
+.add-answer button,
+.add-quote-comment button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: var(--text-secondary);
+    color: var(--bg-primary);
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: inherit;
 }
 
 /* Notifications */
