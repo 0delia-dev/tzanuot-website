@@ -1,3 +1,24 @@
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(-20px) translateX(-50%); }
+}
+
+.light-animation {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9999;
+  display: none;
+  animation: float 3s ease-in-out infinite;
+}
+
 /* =========================
    CSS Variables
    ========================= */
@@ -387,27 +408,10 @@ body {
 /* =========================
    Animations & Notifications
    ========================= */
-.light-animation {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ffd700;
-  text-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
-  pointer-events: none;
-  opacity: 0;
-  z-index: 9999;
-  display: none;
-  animation: float 3s ease-in-out infinite;
-}
+
 .light-animation.animate {
   display: block;
   opacity: 1;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(-50%); }
   50% { transform: translateY(-20px) translateX(-50%); }
 }
 
@@ -489,22 +493,6 @@ body {
     outline: 2px solid var(--bg-accent, #f1b553);
     outline-offset: 2px;
   }
-}
-.light-animation {
-  position: fixed;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: float 3s ease-in-out infinite;
-  display: none;
-  font-size: 2rem;
-  color: #ffd700;
-  text-shadow: 0 0 10px #fff;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) translateX(-50%); }
-  50% { transform: translateY(-20px) translateX(-50%); }
 }
 
 /* =========================
