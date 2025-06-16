@@ -490,6 +490,22 @@ body {
     outline-offset: 2px;
   }
 }
+.light-animation {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float 3s ease-in-out infinite;
+  display: none;
+  font-size: 2rem;
+  color: #ffd700;
+  text-shadow: 0 0 10px #fff;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(-50%); }
+  50% { transform: translateY(-20px) translateX(-50%); }
+}
 
 /* =========================
    End of File
