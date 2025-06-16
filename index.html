@@ -1,173 +1,205 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>צנועות - מקום למציאת בגדים צנועים</title>
-  <meta name="description" content="אתר צנועות - המקום למציאת בגדים יפים וצנועים לנשים דתיות">
-  <link rel="stylesheet" href="style-1.css">
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צנועות - מקום למציאת בגדים צנועים</title>
+    <meta name="description" content="אתר צנועות - המקום למציאת בגדים יפים וצנועים לנשים דתיות">
+    <link rel="stylesheet" href="style-1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 </head>
 <body data-theme="light" data-font-size="normal" data-contrast="normal">
-
-  <header class="header">
-    <div class="container">
-      <h1 class="logo">צנועות</h1>
-      <nav class="nav">
-        <button class="nav-btn active" data-tab="home">בית</button>
-        <button class="nav-btn" data-tab="gallery">גלריה</button>
-        <button class="nav-btn" data-tab="add-item">הוספת בגד</button>
-        <button class="nav-btn" data-tab="forum">פורום</button>
-        <button class="nav-btn" data-tab="tzniut-forum">פורום צניעות</button>
-        <button class="nav-btn" data-tab="about">אודות</button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="main">
-    <section id="home" class="tab-content active">
-      <div class="hero">
+    
+    <header class="header">
         <div class="container">
-          <h2 class="hero-title">ברוכות הבאות לצנועות</h2>
-          <p class="hero-subtitle">המקום למציאת בגדים יפים וצנועים</p>
-          <button class="btn btn-primary" onclick="switchTab('gallery')">צפי בגלריה</button>
+            <h1 class="logo">צנועות</h1>
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="home">בית</button>
+                <button class="nav-btn" data-tab="gallery">גלריה</button>
+                <button class="nav-btn" data-tab="add-item">הוספת בגד</button>
+                <button class="nav-btn" data-tab="forum">פורום</button>
+                <button class="nav-btn" data-tab="tzniut-forum">פורום צניעות</button>
+                <button class="nav-btn" data-tab="about">אודות</button>
+            </nav>
         </div>
-      </div>
-    </section>
+    </header>
 
-    <section id="gallery" class="tab-content">
-      <div class="container">
-        <h2>גלריית בגדים</h2>
-        <div class="filters">
-          <select id="sleeve-filter">
-            <option value="">כל השרוולים</option>
-            <option value="long">ארוך</option>
-            <option value="3quarter">3/4</option>
-            <option value="short">קצר</option>
-          </select>
-          <select id="skirt-filter">
-            <option value="">כל החצאיות</option>
-            <option value="long">ארוכה</option>
-            <option value="midi">מידי</option>
-            <option value="short">קצרה</option>
-          </select>
-          <select id="collar-filter">
-            <option value="">כל הצווארונים</option>
-            <option value="high">גבוה</option>
-            <option value="round">עגול</option>
-            <option value="v">וי</option>
-          </select>
-          <select id="pockets-filter">
-            <option value="">כיסים</option>
-            <option value="yes">יש כיסים</option>
-            <option value="no">אין כיסים</option>
-          </select>
-        </div>
-        <div id="items-grid" class="items-grid"></div>
-      </div>
-    </section>
+    <main class="main">
+        <section id="home" class="tab-content active">
+            <div class="hero">
+                <div class="container">
+                    <h2 class="hero-title">ברוכות הבאות לצנועות</h2>
+                    <p class="hero-subtitle">המקום למציאת בגדים יפים וצנועים</p>
+                    <button class="btn btn-primary" onclick="switchTab('gallery')">צפי בגלריה</button>
+                </div>
+            </div>
+        </section>
 
-    <section id="add-item" class="tab-content">
-      <div class="container">
-        <h2>הוסיפי בגד חדש</h2>
-        <form id="add-item-form" class="form">
-          <input type="text" id="item-title" placeholder="שם הבגד" required>
-          <input type="url" id="item-url" placeholder="קישור לבגד" required>
-          <select id="sleeve-length" required>
-            <option value="">בחרי אורך שרוול</option>
-            <option value="long">ארוך</option>
-            <option value="3quarter">3/4</option>
-            <option value="short">קצר</option>
-          </select>
-          <select id="skirt-length" required>
-            <option value="">בחרי אורך חצאית</option>
-            <option value="long">ארוכה</option>
-            <option value="midi">מידי</option>
-            <option value="short">קצרה</option>
-          </select>
-          <select id="collar-type" required>
-            <option value="">בחרי סוג צווארון</option>
-            <option value="high">גבוה</option>
-            <option value="round">עגול</option>
-            <option value="v">וי</option>
-          </select>
-          <label class="checkbox-label">
-            <input type="checkbox" id="has-pockets">
-            יש כיסים
-          </label>
-          <textarea id="item-description" placeholder="תיאור (אופציונלי)"></textarea>
-          <!-- Honeypot -->
-          <div class="honeypot-field" aria-hidden="true">
-            <label for="website">אתר אינטרנט:</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-          </div>
-          <!-- CAPTCHA -->
-          <div class="captcha-container">
-            <label for="captcha">בעיה פשוטה:</label>
-            <div id="captcha-question"></div>
-            <input type="number" id="captcha-answer" placeholder="תשובה" required>
-          </div>
-          <button type="submit" class="btn btn-primary">הוסיפי בגד</button>
-        </form>
-      </div>
-    </section>
+        <section id="gallery" class="tab-content">
+            <div class="container">
+                <h2>גלריית בגדים</h2>
+                <div class="filters">
+                    <select id="sleeve-filter">
+                        <option value="">כל השרוולים</option>
+                        <option value="long">ארוך</option>
+                        <option value="3quarter">3/4</option>
+                        <option value="short">קצר</option>
+                    </select>
+                    <select id="skirt-filter">
+                        <option value="">כל החצאיות</option>
+                        <option value="long">ארוכה</option>
+                        <option value="midi">מידי</option>
+                        <option value="short">קצרה</option>
+                    </select>
+                    <select id="collar-filter">
+                        <option value="">כל הצווארונים</option>
+                        <option value="high">גבוה</option>
+                        <option value="round">עגול</option>
+                        <option value="v">וי</option>
+                    </select>
+                    <select id="pockets-filter">
+                        <option value="">כיסים</option>
+                        <option value="yes">יש כיסים</option>
+                        <option value="no">אין כיסים</option>
+                    </select>
+                </div>
+                <div id="items-grid" class="items-grid"></div>
+            </div>
+        </section>
 
-    <section id="forum" class="tab-content">
-      <div class="container">
-        <h2>פורום שאלות ותשובות</h2>
-        <button id="ask-question-btn" class="btn btn-secondary">שאלי שאלה חדשה</button>
-        <form id="ask-question-form" class="form" style="display: none;">
-          <input type="text" id="question-title" placeholder="כותרת השאלה" required>
-          <textarea id="question-content" placeholder="תוכן השאלה" required></textarea>
-          <div class="captcha-container">
-            <label for="question-captcha">בעיה פשוטה:</label>
-            <div id="question-captcha-question"></div>
-            <input type="number" id="question-captcha-answer" placeholder="תשובה" required>
-          </div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">פרסמי שאלה</button>
-            <button type="button" class="btn btn-secondary" onclick="hideQuestionForm()">ביטול</button>
-          </div>
-        </form>
-        <div id="forum-posts" class="forum-posts"></div>
-      </div>
-    </section>
+        <section id="add-item" class="tab-content">
+            <div class="container">
+                <h2>הוסיפי בגד חדש</h2>
+                <form id="add-item-form" class="form">
+                    <input type="text" id="item-title" placeholder="שם הבגד" required>
+                    <input type="url" id="item-url" placeholder="קישור לבגד" required>
+                    <select id="sleeve-length" required>
+                        <option value="">בחרי אורך שרוול</option>
+                        <option value="long">ארוך</option>
+                        <option value="3quarter">3/4</option>
+                        <option value="short">קצר</option>
+                    </select>
+                    <select id="skirt-length" required>
+                        <option value="">בחרי אורך חצאית</option>
+                        <option value="long">ארוכה</option>
+                        <option value="midi">מידי</option>
+                        <option value="short">קצרה</option>
+                    </select>
+                    <select id="collar-type" required>
+                        <option value="">בחרי סוג צווארון</option>
+                        <option value="high">גבוה</option>
+                        <option value="round">עגול</option>
+                        <option value="v">וי</option>
+                    </select>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="has-pockets">
+                        יש כיסים
+                    </label>
+                    <textarea id="item-description" placeholder="תיאור (אופציונלי)"></textarea>
+                    
+                    <!-- Honeypot Fields -->
+                    <div class="honeypot-field" aria-hidden="true">
+                        <label for="website">אתר אינטרנט:</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    
+                    <!-- CAPTCHA -->
+                    <div class="captcha-container">
+                        <label for="captcha">בעיה פשוטה:</label>
+                        <div id="captcha-question"></div>
+                        <input type="number" id="captcha-answer" placeholder="תשובה" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">הוסיפי בגד</button>
+                </form>
+            </div>
+        </section>
 
-    <section id="tzniut-forum" class="tab-content">
-      <div class="container">
-        <h2>פורום צניעות</h2>
-        <p class="subtitle">ציטוטים ומחשבות על צניעות מהוגות דתיות מכובדות</p>
-        <div id="tzniut-quotes" class="quotes-container"></div>
-      </div>
-    </section>
+        <section id="forum" class="tab-content">
+            <div class="container">
+                <h2>פורום שאלות ותשובות</h2>
+                <button id="ask-question-btn" class="btn btn-secondary">שאלי שאלה חדשה</button>
+                <form id="ask-question-form" class="form" style="display: none;">
+                    <input type="text" id="question-title" placeholder="כותרת השאלה" required>
+                    <textarea id="question-content" placeholder="תוכן השאלה" required></textarea>
+                    <div class="captcha-container">
+                        <label for="question-captcha">בעיה פשוטה:</label>
+                        <div id="question-captcha-question"></div>
+                        <input type="number" id="question-captcha-answer" placeholder="תשובה" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">פרסמי שאלה</button>
+                        <button type="button" class="btn btn-secondary" onclick="hideQuestionForm()">ביטול</button>
+                    </div>
+                </form>
+                <div id="forum-posts" class="forum-posts"></div>
+            </div>
+        </section>
 
-    <section id="about" class="tab-content">
-      <div class="container">
-        <h2>אודות המיזם</h2>
-        <div class="about-content">
-          <!-- כאן הטקסט האישי שלך (הועתק מהקובץ שלך) -->
-          <!-- ... -->
-        </div>
-      </div>
-    </section>
-  </main>
+        <section id="tzniut-forum" class="tab-content">
+            <div class="container">
+                <h2>פורום צניעות</h2>
+                <p class="subtitle">ציטוטים ומחשבות על צניעות מהוגות דתיות מכובדות</p>
+                <div id="tzniut-quotes" class="quotes-container"></div>
+            </div>
+        </section>
 
-  <!-- Accessibility Controls -->
-  <div class="accessibility-controls">
-    <button id="theme-toggle" class="accessibility-btn" title="החלפת מצב כהה/בהיר">⏾</button>
-    <button id="font-size-toggle" class="accessibility-btn" title="שינוי גודל טקסט">A</button>
-    <button id="contrast-toggle" class="accessibility-btn" title="שיפור ניגודיות">C</button>
-  </div>
+        <section id="about" class="tab-content">
+            <div class="container">
+                <h2>אודות המיזם</h2>
+                <div class="about-content">
+                    <p>היי!</p>
+                       <p> אני אודליה, ומאז ומתמיד החוויה השנואה עליי לפני החג הייתה החיפוש. חיפוש אחרי בגד שהוא יפה ואמא תאשר את הצניעות. זה היה מובן מאליו בשבילי - אבל למה בעצם?</p>
+                    
+                    <p>מתוך ההבנה הזו הקמתי את המיזם הזה, צנועות.</p>
+                    
+                    <h3>מה אנחנו?</h3>
+                    <p>מיזם "צנועות" נולד מתוך חוויה אישית - הקושי היומיומי במציאת בגדים מתאימים מבלי לבזבז שעות אינסופיות בחיפוש. אני מכירה את התחושה הזו היטב - להיכנס לחנות אחר חנות, לגלוש באתר אחר אתר, ובסוף למצוא רק חלק מהפתרון או בכלל לא למצוא כלום.</p>
+                    
+                    <p>צניעות היא לא רק בחירה - היא אורח חיים. אבל למה שזה יהיה כל כך מורכב? למה שנאלץ להתמודד עם שרוולים קצרים, מחשופים וחצאיות קצרות שלא מתאימות לנו בלי אפשרות להימנע מזה?</p>
+                       <p>למה לבזבז זמן יקר לפני כל חג, מועד או אירוע כשיש עוד כל כך הרבה מה לעשות?</p>
+                    
+                    <p>צנועות הוא המקום שבו הפתרונות נמצאים במקום אחד. אבל כדי שזה יעבוד, אני צריכה את העזרה שלכן. האתר מבוסס על שיתוף - כל משתמשת יכולה להוסיף קישורים לפריטים מתאימים ולסמן:</p>
+                    
+                    <ul>
+                        <li>אורך שרוול</li>
+                        <li>אורך חצאית</li>
+                        <li>סוג צווארון</li>
+                        <li>כיסים (כי מי לא אוהבת כיסים? 😌)</li>
+                    </ul>
+                    
+                    <p>בלי התרומה שלכן - הקישורים, הדירוגים והפידבק - האתר לא יוכל לתפקד. הידע והמומחיות שלכן הם מה שהופך את זה למעשי ואמין.</p>
+                    
+                    <h3>החזון שלי?</h3>
+                    <p>אני רוצה שכל אחת תוכל למצוא מה שהיא מחפשת בקלות, בלי להתפשר על הערכים שלה. להפוך את החיפוש לחוויה נעימה במקום למאבק יומיומי.</p>
+                    
+                    <p><strong>בואו נעשה את זה ביחד - בהדדיות.</strong></p>
+                    
+                    <div class="contact-section">
+                        <h3>יצירת קשר</h3>
+                        <p>לשאלות, הערות והצעות: <a href="mailto:katz.odlia@gmail.com">katz.odlia@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <!-- Light Animation -->
-  <div id="let-there-be-light" class="light-animation">ויהי אור</div>
-
-  <footer class="footer">
-    <div class="container">
-      <p>&copy; 2025 צנועות - כל הזכויות שמורות</p>
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls">
+        <button id="theme-toggle" class="accessibility-btn" title="החלפת מצב כהה/בהיר">⏾</button>
+        <button id="font-size-toggle" class="accessibility-btn" title="שינוי גודל טקסט">A</button>
+        <button id="contrast-toggle" class="accessibility-btn" title="שיפור ניגודיות">C</button>
     </div>
-  </footer>
 
-  <script src="app.js"></script>
+    <!-- Light Animation -->
+    <div id="let-there-be-light" class="light-animation">ויהי אור</div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 צנועות - כל הזכויות שמורות</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
