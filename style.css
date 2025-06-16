@@ -1,3 +1,6 @@
+/* =========================
+   CSS Variables
+   ========================= */
 :root {
   --bg-primary: #f8efda;
   --bg-secondary: #ffffff;
@@ -48,12 +51,23 @@
   --border-color: #fff;
 }
 
+/* Font size accessibility */
 [data-font-size="small"] { font-size: 14px; }
 [data-font-size="normal"] { font-size: 16px; }
 [data-font-size="large"] { font-size: 18px; }
 [data-font-size="extra-large"] { font-size: 20px; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* =========================
+   Global Styles & Resets
+   ========================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Varela Round', Arial, sans-serif;
@@ -66,36 +80,25 @@ body {
   line-height: 1.6;
 }
 
-.header,
-.form,
-.item-card,
-.forum-post,
-.quote-card,
-.contact-section,
-.captcha-container {
+/* =========================
+   Border Radius Utility Classes
+   ========================= */
+.header, .form, .item-card, .forum-post, .quote-card, .contact-section, .captcha-container {
   border-radius: var(--radius-md);
 }
-
-.btn,
-.nav-btn,
-.filters select,
-.accessibility-btn,
-.add-comment input,
-.add-comment button,
-.add-answer input,
-.add-answer button,
-.add-quote-comment input,
-.add-quote-comment button {
+.btn, .nav-btn, .filters select, .accessibility-btn,
+.add-comment input, .add-comment button,
+.add-answer input, .add-answer button,
+.add-quote-comment input, .add-quote-comment button {
   border-radius: var(--radius-sm);
 }
-
-.honeypot-field,
-.comment,
-.forum-answer,
-.quote-comment {
+.honeypot-field, .comment, .forum-answer, .quote-comment {
   border-radius: var(--radius-xs);
 }
 
+/* =========================
+   Header & Navigation
+   ========================= */
 .header {
   background: var(--bg-secondary);
   padding: 1rem 0;
@@ -117,7 +120,11 @@ body {
   font-weight: bold;
   margin: 0;
 }
-.nav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
 .nav-btn {
   background: var(--bg-primary);
   border: 2px solid var(--border-color);
@@ -138,7 +145,13 @@ body {
   box-shadow: 0 5px 15px var(--shadow-hover);
 }
 
-.main { min-height: calc(100vh - 160px); padding: 2rem 0; }
+/* =========================
+   Main Content & Hero
+   ========================= */
+.main {
+  min-height: calc(100vh - 160px);
+  padding: 2rem 0;
+}
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
@@ -150,29 +163,39 @@ body {
   border-radius: 20px;
   margin-bottom: 2rem;
 }
-.hero-title { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);}
-.hero-subtitle { font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9; }
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* =========================
+   Buttons & Filters
+   ========================= */
+.btn, .nav-btn, .filters select, .accessibility-btn {
+  font-family: inherit;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-size: 1rem;
+}
 
 .btn {
   display: inline-block;
   padding: 0.75rem 2rem;
   border: none;
   border-radius: 25px;
-  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
   text-decoration: none;
-  font-family: inherit;
 }
 .btn-primary { background: var(--text-secondary); color: var(--bg-primary); }
 .btn-primary:hover { background: var(--bg-accent); transform: translateY(-3px); box-shadow: 0 10px 20px var(--shadow-hover);}
 .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 2px solid var(--border-color);}
 .btn-secondary:hover { background: var(--bg-accent); color: var(--bg-primary); border-color: var(--bg-accent); }
-
-section { margin-bottom: 3rem; }
-section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondary); }
-.subtitle { text-align: center; color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
 
 .filters {
   display: flex;
@@ -187,13 +210,16 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   border-radius: 20px;
   background: var(--bg-secondary);
   color: var(--text-primary);
-  font-size: 1rem;
   outline: none;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  font-family: inherit;
 }
-.filters select:focus { border-color: var(--bg-accent); box-shadow: 0 0 10px var(--shadow-color); }
+.filters select:focus {
+  border-color: var(--bg-accent);
+  box-shadow: 0 0 10px var(--shadow-color);
+}
 
+/* =========================
+   Cards, Forms, and Lists
+   ========================= */
 .items-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -202,11 +228,10 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
 }
 .item-card {
   background: var(--bg-secondary);
-  border-radius: var(--radius-md);
   padding: 2rem;
   box-shadow: 0 10px 30px var(--shadow-color);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
   border: 2px solid var(--border-color);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
 }
 .item-card:hover {
   transform: translateY(-10px);
@@ -229,6 +254,7 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
 .star { font-size: 1.5rem; color: var(--border-color); cursor: pointer; transition: color 0.2s, transform 0.2s;}
 .star:hover, .star.active { color: #ffd700; transform: scale(1.1); }
 
+/* Forms */
 .form {
   background: var(--bg-secondary);
   padding: 2rem;
@@ -245,17 +271,17 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   border-radius: 15px;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-size: 1rem;
   outline: none;
-  transition: border-color 0.3s;
-  font-family: inherit;
 }
-.form input:focus, .form select:focus, .form textarea:focus { border-color: var(--bg-accent);}
+.form input:focus, .form select:focus, .form textarea:focus {
+  border-color: var(--bg-accent);
+}
 .form textarea { resize: vertical; min-height: 100px; }
 .checkbox-label { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer;}
 .checkbox-label input[type="checkbox"] { width: auto; margin: 0; }
 .form-actions { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
 
+/* Honeypot hidden field */
 .honeypot-field {
   position: absolute;
   left: -9999px;
@@ -265,12 +291,13 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   overflow: hidden;
 }
 
+/* Captcha */
 .captcha-container {
   background: var(--bg-primary);
   padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 10px;
   border: 2px solid var(--border-color);
-  margin-bottom: 1rem;
 }
 .captcha-container label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-secondary);}
 #captcha-question, #question-captcha-question {
@@ -280,6 +307,9 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   margin-bottom: 0.5rem;
 }
 
+/* =========================
+   Forum & Quotes
+   ========================= */
 .forum-posts { margin-top: 2rem; }
 .forum-post {
   background: var(--bg-secondary);
@@ -305,18 +335,22 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
 .quote-text { font-style: italic; font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); line-height: 1.8;}
 .quote-author { font-weight: bold; color: var(--text-secondary); margin-bottom: 1rem; }
 
+/* =========================
+   About, Contact, Footer
+   ========================= */
 .about-content { max-width: 800px; margin: 0 auto; line-height: 1.8;}
 .about-content ul { margin: 1rem 0; padding-right: 2rem;}
 .about-content li { margin-bottom: 0.5rem;}
 .contact-section {
   background: var(--bg-secondary);
   padding: 2rem;
-  border-radius: var(--radius-md);
-  margin-top: 2rem;
   text-align: center;
   border: 2px solid var(--border-color);
 }
 
+/* =========================
+   Accessibility Controls
+   ========================= */
 .accessibility-controls {
   position: fixed;
   bottom: 20px;
@@ -336,7 +370,6 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, transform 0.3s;
   box-shadow: 0 4px 12px var(--shadow-color);
 }
 .accessibility-btn:hover {
@@ -350,7 +383,9 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   outline-offset: 2px;
 }
 
-/* מיקום ותצוגה של אנימציית "ויהי אור" בתחתית */
+/* =========================
+   Animations & Notifications
+   ========================= */
 .light-animation {
   position: fixed;
   bottom: 100px;
@@ -394,6 +429,9 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   to { transform: translateX(-50%) translateY(0); opacity: 1;}
 }
 
+/* =========================
+   Utility Classes
+   ========================= */
 .no-results {
   text-align: center;
   color: var(--text-muted);
@@ -404,6 +442,9 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
   border: 2px dashed var(--border-color);
 }
 
+/* =========================
+   Footer
+   ========================= */
 .footer {
   background: var(--bg-secondary);
   padding: 2rem 0;
@@ -413,6 +454,9 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
 }
 .footer p { color: var(--text-muted); margin: 0; }
 
+/* =========================
+   Responsive & Forced Colors
+   ========================= */
 @media (max-width: 768px) {
   .header .container { flex-direction: column; text-align: center;}
   .nav { justify-content: center;}
@@ -445,3 +489,7 @@ section h2 { text-align: center; margin-bottom: 2rem; color: var(--text-secondar
     outline-offset: 2px;
   }
 }
+
+/* =========================
+   End of File
+   ========================= */
