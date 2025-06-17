@@ -2,6 +2,27 @@
   0%, 100% { transform: translateY(0) translateX(-50%); }
   50% { transform: translateY(-20px) translateX(-50%); }
 }
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 8px;
+  }
+}
 
 .light-animation {
   position: fixed;
