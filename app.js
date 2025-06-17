@@ -1,13 +1,6 @@
 localStorage.clear();
 location.reload();
 
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
-});
-
-function initializeApp() {
-    // אתחול כל הפונקציות
-}
 // מערכים ריקים - אין דמו
 let currentItems = [];
 let currentForumPosts = [];
