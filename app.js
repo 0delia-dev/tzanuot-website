@@ -9,8 +9,6 @@ let formStartTime = Date.now();
 
 // אתחול האפליקציה
 document.addEventListener('DOMContentLoaded', initializeApp);
-});
-
 function initializeApp() {
     loadUserSettings();
     setupEventListeners();
