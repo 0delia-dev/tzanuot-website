@@ -1,5 +1,3 @@
-localStorage.clear();
-location.reload();
 
 // מערכים ריקים - אין דמו
 let currentItems = [];
