@@ -8,8 +8,7 @@ let currentQuotes = [];
 let formStartTime = Date.now();
 
 // אתחול האפליקציה
-document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
+document.addEventListener('DOMContentLoaded', initializeApp);
 });
 
 function initializeApp() {
