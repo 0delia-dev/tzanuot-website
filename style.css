@@ -446,6 +446,13 @@ body {
   border-radius: var(--radius-md);
   border: 2px dashed var(--border-color);
 }
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 
 /* =========================
    Footer
