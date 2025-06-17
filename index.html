@@ -199,6 +199,24 @@
           <p>&copy; 2025 צנועות - כל הזכויות שמורות</p>
       </div>
   </footer>
+<!-- קוד Firebase - להדביק לפני סגירת </body> -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAFJlKA6NnRb3YA2ILxcHQiwT2Kh1LZTTc",
+    authDomain: "tzanuot-website.firebaseapp.com",
+    projectId: "tzanuot-website",
+    storageBucket: "tzanuot-website.firebasestorage.app",
+    messagingSenderId: "684808024105",
+    appId: "1:684808024105:web:f890452f7e0622f73e2c38",
+    measurementId: "G-MNREGLH4D1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 
   <script src="app.js"></script>
 </body>
