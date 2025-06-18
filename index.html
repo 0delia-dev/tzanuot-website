@@ -73,32 +73,25 @@
           <div class="container">
               <h2>הוסיפי בגד חדש</h2>
               <form id="add-item-form" class="form">
-                  <input type="text" id="item-title" placeholder="שם הבגד" required>
-                  <input type="url" id="item-url" placeholder="קישור לבגד" required>
-                  <select id="sleeve-length" required>
-                      <option value="">בחרי אורך שרוול</option>
-                      <option value="long">ארוך</option>
-                      <option value="3quarter">3/4</option>
-                      <option value="short">קצר</option>
-                  </select>
-                  <select id="skirt-length" required>
-                      <option value="">בחרי אורך חצאית</option>
-                      <option value="long">ארוכה</option>
-                      <option value="midi">מידי</option>
-                      <option value="short">קצרה</option>
-                  </select>
-                  <select id="collar-type" required>
-                      <option value="">בחרי סוג צווארון</option>
-                      <option value="high">גבוה</option>
-                      <option value="round">עגול</option>
-                      <option value="v">וי</option>
-                  </select>
-                  <label class="checkbox-label">
-                      <input type="checkbox" id="has-pockets">
-                      יש כיסים
-                  </label>
-                  <textarea id="item-description" placeholder="תיאור (אופציונלי)"></textarea>
-                  
+                  <form id="add-item-form" class="form">
+  <!-- בחירת סוג בגד -->
+  <label for="item-type">סוג בגד:</label>
+  <select id="item-type" required>
+    <option value="">בחרי סוג בגד</option>
+    <option value="dress">שמלה</option>
+    <option value="skirt">חצאית</option>
+    <option value="shirt">חולצה</option>
+  </select>
+
+  <!-- כאן יופיעו שדות דינמיים -->
+  <div id="dynamic-fields"></div>
+
+  <!-- שדות קבועים -->
+  <input type="url" id="item-url" placeholder="קישור לבגד" required>
+  <textarea id="item-description" placeholder="תיאור (אופציונלי)"></textarea>
+  <button type="submit" class="btn btn-primary">הוסיפי בגד</button>
+</form>
+
                   <!-- Honeypot Fields -->
                   <div class="honeypot-field" aria-hidden="true">
                       <label for="website">אתר אינטרנט:</label>
