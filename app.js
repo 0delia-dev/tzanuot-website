@@ -8,16 +8,94 @@ let currentQuotes = [];
 let formStartTime = Date.now();
 
 // אתחול האפליקציה
-document.addEventListener('DOMContentLoaded', initializeApp);
-function initializeApp() {
-    loadUserSettings();
-    setupEventListeners();
-    loadDataFromStorage();
-    setupCaptcha();
-    renderItems();
-    renderForumPosts();
-    renderTzniutQuotes();
-}
+// ... existing code ...
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+
+    // כאן להכניס את קוד השדות הדינמיים:
+    const dynamicFields = document.getElementById('dynamic-fields');
+    document.getElementById('item-type').addEventListener('change', function() {
+      const type = this.value;
+      let html = '';
+      if (type === 'dress') {
+        html = `
+          <label>אורך שרוול:
+            <select id="sleeve-length" required>
+              <option value="">בחרי</option>
+              <option value="long">ארוך</option>
+              <option value="3quarter">3/4</option>
+              <option value="short">קצר</option>
+            </select>
+          </label>
+          <label>אורך חצאית:
+            <select id="skirt-length" required>
+              <option value="">בחרי</option>
+              <option value="long">ארוכה</option>
+              <option value="midi">מידי</option>
+              <option value="short">קצרה</option>
+            </select>
+          </label>
+          <label>סוג צווארון:
+            <select id="collar-type" required>
+              <option value="">בחרי</option>
+              <option value="high">גבוה</option>
+              <option value="round">עגול</option>
+              <option value="v">וי</option>
+            </select>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="has-pockets"> יש כיסים
+          </label>
+        `;
+      } else if (type === 'skirt') {
+        html = `
+          <label>אורך חצאית:
+            <select id="skirt-length" required>
+              <option value="">בחרי</option>
+              <option value="long">ארוכה</option>
+              <option value="midi">מידי</option>
+              <option value="short">קצרה</option>
+            </select>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="has-slit"> יש שסע
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" id="has-pockets"> יש כיסים
+          </label>
+        `;
+      } else if (type === 'shirt') {
+        html = `
+          <label>אורך שרוול:
+            <select id="sleeve-length" required>
+              <option value="">בחרי</option>
+              <option value="long">ארוך</option>
+              <option value="3quarter">3/4</option>
+              <option value="short">קצר</option>
+            </select>
+          </label>
+          <label>סוג צווארון:
+            <select id="collar-type" required>
+              <option value="">בחרי</option>
+              <option value="high">גבוה</option>
+              <option value="round">עגול</option>
+              <option value="v">וי</option>
+            </select>
+          </label>
+          <label>אורך חולצה:
+            <select id="shirt-length" required>
+              <option value="">בחרי</option>
+              <option value="long">ארוכה</option>
+              <option value="regular">רגילה</option>
+              <option value="short">קצרה</option>
+            </select>
+          </label>
+        `;
+      }
+      dynamicFields.innerHTML = html;
+    });
+});
 
 // ----------------- נגישות -----------------
 function setupEventListeners() {
