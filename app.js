@@ -48,7 +48,6 @@ function toggleTheme() {
     document.body.dataset.theme = next;
     document.getElementById('theme-toggle').textContent = next === 'light' ? '⏾' : '✹';
     localStorage.setItem('theme', next);
-    showNotification(`מעבר למצב ${next === 'light' ? 'בהיר' : 'כהה'}`);
     if (current === 'dark' && next === 'light') animateLightTransition();
 }
 
