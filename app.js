@@ -445,3 +445,46 @@ function validateFormSecurity(formType = 'item') {
     }
     return true;
 }
+document.getElementById('item-url').addEventListener('blur', function() {
+// הכניסי את ה-API Key שלך כאן
+const apiKey = "4ec38ad480e0da088c7beb21717f99ef";
+
+// פונקציה שמופעלת כאשר המשתמשת מסיימת להקליד קישור
+document.getElementById('item-url').addEventListener('blur', function() {
+  const urlToPreview = this.value.trim();
+  if (!urlToPreview) return;
+
+  fetch(`https://api.linkpreview.net/?key=${apiKey}&q=${encodeURIComponent(urlToPreview)}`)
+    .then(response => response.json())
+    .then(data => {
+      // שם הבגד (כותרת)
+      if (data.title) document.getElementById('item-title').value = data.title;
+      // תיאור
+      if (data.description) document.getElementById('item-description').value = data.description;
+      // תמונה
+      if (data.image) {
+        // אם יש שדה תמונה בטופס (input type="url" או img לתצוגה)
+        const imgField = document.getElementById('item-image');
+        if (imgField) imgField.value = data.image; // אם זה input
+        // או להציג preview:
+        const imgPreview = document.getElementById('item-image-preview');
+        if (imgPreview) imgPreview.src = data.image;
+      }
+      // מחיר וטווח מידות – נסה לאתר בתיאור (לא תמיד קיים)
+      if (data.description) {
+        // דוגמה פשוטה: נסה לאתר מחיר בתיאור
+        const priceMatch = data.description.match(/(\d{2,5}(\.\d{1,2})?)\s*₪/);
+        if (priceMatch && document.getElementById('item-price')) {
+          document.getElementById('item-price').value = priceMatch[1];
+        }
+        // דוגמה: נסה לאתר טווח מידות (למשל "מידות S-XL")
+        const sizeMatch = data.description.match(/מיד[ו|ה]ת?\s*[:\-]?\s*([A-Za-z0-9\-–, ]+)/i);
+        if (sizeMatch && document.getElementById('item-sizes')) {
+          document.getElementById('item-sizes').value = sizeMatch[1];
+        }
+      }
+    })
+    .catch(error => {
+      console.error("שגיאה בשליפת נתונים מהקישור:", error);
+    });
+});
