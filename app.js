@@ -565,4 +565,27 @@ document.getElementById('item-url').addEventListener('blur', function() {
     .catch(error => {
       console.error("שגיאה בשליפת נתונים מהקישור:", error);
     });
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAFJlKA6NnRb3YA2ILxcHQiwT2Kh1LZTTc",
+    authDomain: "tzanuot-website.firebaseapp.com",
+    projectId: "tzanuot-website",
+    storageBucket: "tzanuot-website.firebasestorage.app",
+    messagingSenderId: "684808024105",
+    appId: "1:684808024105:web:f890452f7e0622f73e2c38",
+    measurementId: "G-MNREGLH4D1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 });
