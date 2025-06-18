@@ -200,11 +200,10 @@ function applyFilters() {
 }
 
 // ----------------- טופס הוספת בגד -----------------
-function handleAddItem(e) {
+async function handleAddItem(e) {
     e.preventDefault();
     if (!validateFormSecurity('item')) return;
     const formData = {
-        id: Date.now(),
         title: document.getElementById('item-title').value.trim(),
         url: document.getElementById('item-url').value.trim(),
         sleeve_length: document.getElementById('sleeve-length').value,
@@ -213,11 +212,11 @@ function handleAddItem(e) {
         has_pockets: document.getElementById('has-pockets').checked,
         description: document.getElementById('item-description').value.trim(),
         rating: 0,
-        comments: []
+        comments: [],
+        created: new Date().toISOString()
     };
-    currentItems.push(formData);
+    await window.addClothToFirestore(formData); // שמירה ב-Firebase
     document.getElementById('add-item-form').reset();
-    saveDataToStorage();
     setupCaptcha();
     formStartTime = Date.now();
     switchTab('gallery');
