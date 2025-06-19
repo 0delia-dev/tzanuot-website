@@ -2,8 +2,16 @@
   "version": 2,
   "routes": [
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|svg|webp|gif|ico|json|woff2?|ttf|eot|xml))",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|svg|webp|gif|ico|json|woff2?|ttf|eot|xml|html))",
       "dest": "/$1"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
     },
     {
       "src": "/(.*)",
