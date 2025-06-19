@@ -439,6 +439,18 @@ img {
   text-align: center;
   border: 2px solid var(--border-color);
 }
+#let-there-be-light {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+  z-index: 9999;
+}
 
 /* =========================
    Accessibility Controls
