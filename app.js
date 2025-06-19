@@ -1,3 +1,18 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAFJlKA6NnRb3YA2ILxcHQiwT2Kh1LZTTc",
+  authDomain: "tzanuot-website.firebaseapp.com",
+  projectId: "tzanuot-website",
+  storageBucket: "tzanuot-website.firebasestorage.app",
+  messagingSenderId: "684808024105",
+  appId: "1:684808024105:web:f890452f7e0622f73e2c38",
+  measurementId: "G-MNREGLH4D1"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 // מערכים ריקים - אין דמו
 let currentItems = [];
@@ -8,7 +23,13 @@ let currentQuotes = [];
 let formStartTime = Date.now();
 
 // אתחול האפליקציה
-// ... existing code ...
+function initializeApp() {
+    loadUserSettings();
+    setupEventListeners();
+    loadDataFromStorage();
+    // טעינת בגדים מ-Firestore
+    loadClothesFromFirestore();
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -292,7 +313,7 @@ async function handleAddItem(e) {
         comments: [],
         created: new Date().toISOString()
     };
-    await window.addClothToFirestore(formData); // שמירה ב-Firebase
+    await addClothToFirestore(formData); // שמירה ב-Firebase
     document.getElementById('add-item-form').reset();
     setupCaptcha();
     formStartTime = Date.now();
@@ -523,69 +544,61 @@ function validateFormSecurity(formType = 'item') {
     }
     return true;
 }
+
+// ----------------- פונקציות Firestore -----------------
+async function loadClothesFromFirestore() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "clothes"));
+        window.currentItems = [];
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            window.currentItems.push({
+                ...data,
+                id: doc.id
+            });
+        });
+        if (window.renderItems) window.renderItems(window.currentItems);
+    } catch (error) {
+        console.error("שגיאה בטעינת נתונים:", error);
+        showNotification("בעיה בטעינת הנתונים");
+    }
+}
+
+async function addClothToFirestore(formData) {
+    try {
+        await addDoc(collection(db, "clothes"), formData);
+        loadClothesFromFirestore();
+    } catch (error) {
+        console.error("שגיאה בהוספת בגד:", error);
+        showNotification("בעיה בהוספת הבגד");
+    }
+}
+
+// הוספת שדה כותרת חסר
 document.getElementById('item-url').addEventListener('blur', function() {
-// הכניסי את ה-API Key שלך כאן
-const apiKey = "4ec38ad480e0da088c7beb21717f99ef";
-
-// פונקציה שמופעלת כאשר המשתמשת מסיימת להקליד קישור
-document.getElementById('item-url').addEventListener('blur', function() {
-  const urlToPreview = this.value.trim();
-  if (!urlToPreview) return;
-
-  fetch(`https://api.linkpreview.net/?key=${apiKey}&q=${encodeURIComponent(urlToPreview)}`)
-    .then(response => response.json())
-    .then(data => {
-      // שם הבגד (כותרת)
-      if (data.title) document.getElementById('item-title').value = data.title;
-      // תיאור
-      if (data.description) document.getElementById('item-description').value = data.description;
-      // תמונה
-      if (data.image) {
-        // אם יש שדה תמונה בטופס (input type="url" או img לתצוגה)
-        const imgField = document.getElementById('item-image');
-        if (imgField) imgField.value = data.image; // אם זה input
-        // או להציג preview:
-        const imgPreview = document.getElementById('item-image-preview');
-        if (imgPreview) imgPreview.src = data.image;
-      }
-      // מחיר וטווח מידות – נסה לאתר בתיאור (לא תמיד קיים)
-      if (data.description) {
-        // דוגמה פשוטה: נסה לאתר מחיר בתיאור
-        const priceMatch = data.description.match(/(\d{2,5}(\.\d{1,2})?)\s*₪/);
-        if (priceMatch && document.getElementById('item-price')) {
-          document.getElementById('item-price').value = priceMatch[1];
-        }
-        // דוגמה: נסה לאתר טווח מידות (למשל "מידות S-XL")
-        const sizeMatch = data.description.match(/מיד[ו|ה]ת?\s*[:\-]?\s*([A-Za-z0-9\-–, ]+)/i);
-        if (sizeMatch && document.getElementById('item-sizes')) {
-          document.getElementById('item-sizes').value = sizeMatch[1];
-        }
-      }
-    })
-    .catch(error => {
-      console.error("שגיאה בשליפת נתונים מהקישור:", error);
-    });
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyAFJlKA6NnRb3YA2ILxcHQiwT2Kh1LZTTc",
-    authDomain: "tzanuot-website.firebaseapp.com",
-    projectId: "tzanuot-website",
-    storageBucket: "tzanuot-website.firebasestorage.app",
-    messagingSenderId: "684808024105",
-    appId: "1:684808024105:web:f890452f7e0622f73e2c38",
-    measurementId: "G-MNREGLH4D1"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
+    const apiKey = "4ec38ad480e0da088c7beb21717f99ef";
+    const urlToPreview = this.value.trim();
+    if (!urlToPreview) return;
+    
+    fetch(`https://api.linkpreview.net/?key=${apiKey}&q=${encodeURIComponent(urlToPreview)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.title) {
+                document.getElementById('item-title').value = data.title;
+            }
+            if (data.description) {
+                document.getElementById('item-description').value = data.description;
+            }
+        })
+        .catch(error => {
+            console.error("שגיאה בשליפת נתונים מהקישור:", error);
+        });
 });
+
+// הוספת פונקציות ל-window
+window.switchTab = switchTab;
+window.addComment = addComment;
+window.addAnswer = addAnswer;
+window.addQuoteComment = addQuoteComment;
+window.hideQuestionForm = hideQuestionForm;
+window.addClothToFirestore = addClothToFirestore;
