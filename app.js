@@ -1,42 +1,19 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAFJlKA6NnRb3YA2ILxcHQiwT2Kh1LZTTc",
-  authDomain: "tzanuot-website.firebaseapp.com",
-  projectId: "tzanuot-website",
-  storageBucket: "tzanuot-website.firebasestorage.app",
-  messagingSenderId: "684808024105",
-  appId: "1:684808024105:web:f890452f7e0622f73e2c38",
-  measurementId: "G-MNREGLH4D1"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// מערכים ריקים - אין דמו
-let currentItems = [];
-let currentForumPosts = [];
-let currentQuotes = [];
-
-// זמן התחלת מילוי טופס (להגנה על ספאם)
-let formStartTime = Date.now();
-
-// אתחול האפליקציה
-function initializeApp() {
-    loadUserSettings();
-    setupEventListeners();
-    loadDataFromStorage();
-    // טעינת בגדים מ-Firestore
-    loadClothesFromFirestore();
+function initializeSiteApp() {
+  loadUserSettings();
+  setupEventListeners();
+  loadDataFromStorage();
+  loadClothesFromFirestore();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    initializeApp();
+  initializeSiteApp();
+
 
     // כאן להכניס את קוד השדות הדינמיים:
-    const dynamicFields = document.getElementById('dynamic-fields');
-    document.getElementById('item-type').addEventListener('change', function() {
+   const dynamicFields = document.getElementById('dynamic-fields');
+const itemType = document.getElementById('item-type');
+if (dynamicFields && itemType) {
+  itemType.addEventListener('change', function() {
       const type = this.value;
       let html = '';
       if (type === 'dress') {
@@ -575,25 +552,28 @@ async function addClothToFirestore(formData) {
 }
 
 // הוספת שדה כותרת חסר
-document.getElementById('item-url').addEventListener('blur', function() {
+const itemUrlInput = document.getElementById('item-url');
+if (itemUrlInput) {
+  itemUrlInput.addEventListener('blur', function() {
     const apiKey = "4ec38ad480e0da088c7beb21717f99ef";
     const urlToPreview = this.value.trim();
     if (!urlToPreview) return;
-    
+
     fetch(`https://api.linkpreview.net/?key=${apiKey}&q=${encodeURIComponent(urlToPreview)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.title) {
-                document.getElementById('item-title').value = data.title;
-            }
-            if (data.description) {
-                document.getElementById('item-description').value = data.description;
-            }
-        })
-        .catch(error => {
-            console.error("שגיאה בשליפת נתונים מהקישור:", error);
-        });
-});
+      .then(response => response.json())
+      .then(data => {
+        if (data.title) {
+          document.getElementById('item-title').value = data.title;
+        }
+        if (data.description) {
+          document.getElementById('item-description').value = data.description;
+        }
+      }) // <-- This closing parenthesis was missing
+      .catch(error => {
+        console.error("שגיאה בשליפת נתונים מהקישור:", error);
+      });
+  });
+}
 
 // הוספת פונקציות ל-window
 window.switchTab = switchTab;
