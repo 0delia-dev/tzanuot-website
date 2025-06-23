@@ -39,7 +39,7 @@ if (dynamicFields && itemType) {
               <option value="">בחרי</option>
               <option value="high">גבוה</option>
               <option value="round">עגול</option>
-              <option value="v">וי</option>
+              <option value="low">נמוך</option>
             </select>
           </label>
           <label class="checkbox-label">
@@ -78,7 +78,7 @@ if (dynamicFields && itemType) {
               <option value="">בחרי</option>
               <option value="high">גבוה</option>
               <option value="round">עגול</option>
-              <option value="v">וי</option>
+              <option value="low">נמוך</option>
             </select>
           </label>
           <label>אורך חולצה:
